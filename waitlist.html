@@ -1,0 +1,533 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Join the Waitlist — OnePrompt</title>
+    <meta name="description" content="Join the OnePrompt early access waitlist. Be first to get structured AI prompts on iOS.">
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=DM+Serif+Display&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #09090b;
+            --navy: #0A0E1A;
+            --navy-mid: #111827;
+            --navy-light: #1C2540;
+            --surface: rgba(28, 37, 64, 0.6);
+            --surface-border: rgba(255,255,255,0.07);
+            --text: #fafafa;
+            --text-secondary: rgba(255,255,255,0.55);
+            --text-tertiary: rgba(255,255,255,0.3);
+            --indigo: #6366f1;
+            --indigo-light: #818cf8;
+            --indigo-dim: rgba(99,102,241,0.12);
+            --indigo-border: rgba(99,102,241,0.3);
+            --gold: #F0C040;
+            --green: #4ade80;
+            --red: #f87171;
+            --radius: 16px;
+            --radius-sm: 10px;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: 'DM Sans', -apple-system, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Nav */
+        nav {
+            padding: 20px 32px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid var(--surface-border);
+            backdrop-filter: blur(20px);
+        }
+        .logo {
+            font-family: 'DM Serif Display', Georgia, serif;
+            font-size: 1.25rem;
+            text-decoration: none;
+            color: var(--text);
+        }
+        .nav-back {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            transition: color 0.2s;
+        }
+        .nav-back:hover { color: var(--text); }
+
+        /* Main */
+        main {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 60px 24px;
+        }
+
+        .form-wrapper {
+            width: 100%;
+            max-width: 520px;
+        }
+
+        /* Header */
+        .form-header {
+            text-align: center;
+            margin-bottom: 48px;
+        }
+        .logo-icon {
+            width: 64px;
+            height: 64px;
+            background: var(--navy);
+            border-radius: 15px;
+            border: 1.5px solid transparent;
+            background-clip: padding-box;
+            position: relative;
+            margin: 0 auto 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 0 24px rgba(99,102,241,0.3);
+        }
+        .logo-icon::before {
+            content: '';
+            position: absolute;
+            inset: -1.5px;
+            border-radius: 16px;
+            background: linear-gradient(135deg, #4f6ef7, #6366f1);
+            z-index: -1;
+        }
+        .logo-icon-inner {
+            font-family: 'DM Serif Display', Georgia, serif;
+            font-size: 1.8rem;
+            color: white;
+        }
+        .logo-sparkle {
+            position: absolute;
+            color: var(--gold);
+            line-height: 1;
+        }
+        .logo-sparkle.lg { top: 6px; right: 8px; font-size: 14px; }
+        .logo-sparkle.md { top: 22px; right: 4px; font-size: 9px; }
+        .logo-sparkle.sm { top: 32px; right: 12px; font-size: 6px; }
+
+        .form-header h1 {
+            font-family: 'DM Serif Display', Georgia, serif;
+            font-size: 2rem;
+            font-weight: 400;
+            letter-spacing: -0.02em;
+            margin-bottom: 12px;
+        }
+        .form-header p {
+            color: var(--text-secondary);
+            font-size: 1rem;
+            line-height: 1.6;
+        }
+
+        /* Form */
+        .form-card {
+            background: var(--surface);
+            border: 1px solid var(--surface-border);
+            border-radius: var(--radius);
+            padding: 40px;
+        }
+
+        .field {
+            margin-bottom: 28px;
+        }
+
+        label {
+            display: block;
+            font-size: 0.875rem;
+            font-weight: 600;
+            margin-bottom: 10px;
+            color: var(--text);
+        }
+        label .required {
+            color: var(--indigo);
+            margin-left: 3px;
+        }
+        label .hint {
+            font-weight: 400;
+            color: var(--text-tertiary);
+            font-size: 0.8rem;
+            margin-left: 6px;
+        }
+
+        input[type="email"] {
+            width: 100%;
+            background: rgba(255,255,255,0.04);
+            border: 1px solid var(--surface-border);
+            border-radius: var(--radius-sm);
+            padding: 14px 16px;
+            font-size: 0.95rem;
+            font-family: 'DM Sans', sans-serif;
+            color: var(--text);
+            outline: none;
+            transition: border-color 0.2s, box-shadow 0.2s;
+        }
+        input[type="email"]::placeholder { color: var(--text-tertiary); }
+        input[type="email"]:focus {
+            border-color: var(--indigo);
+            box-shadow: 0 0 0 3px rgba(99,102,241,0.15);
+        }
+        input[type="email"].error {
+            border-color: var(--red);
+        }
+
+        /* Checkbox options */
+        .options {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        .option {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            cursor: pointer;
+            padding: 12px 16px;
+            border-radius: var(--radius-sm);
+            border: 1px solid var(--surface-border);
+            background: rgba(255,255,255,0.02);
+            transition: all 0.2s;
+        }
+        .option:hover {
+            border-color: var(--indigo-border);
+            background: var(--indigo-dim);
+        }
+        .option input[type="checkbox"],
+        .option input[type="radio"] {
+            appearance: none;
+            -webkit-appearance: none;
+            width: 18px;
+            height: 18px;
+            border: 1.5px solid var(--surface-border);
+            border-radius: 5px;
+            background: transparent;
+            cursor: pointer;
+            flex-shrink: 0;
+            transition: all 0.15s;
+            position: relative;
+        }
+        .option input[type="radio"] { border-radius: 50%; }
+        .option input[type="checkbox"]:checked,
+        .option input[type="radio"]:checked {
+            background: var(--indigo);
+            border-color: var(--indigo);
+        }
+        .option input[type="checkbox"]:checked::after {
+            content: '✓';
+            position: absolute;
+            color: white;
+            font-size: 11px;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+        .option input[type="radio"]:checked::after {
+            content: '';
+            position: absolute;
+            width: 8px;
+            height: 8px;
+            background: white;
+            border-radius: 50%;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+        .option.selected {
+            border-color: var(--indigo-border);
+            background: var(--indigo-dim);
+        }
+        .option-label {
+            font-size: 0.9rem;
+            color: var(--text);
+        }
+        .option-emoji { font-size: 1.1rem; }
+
+        /* Submit */
+        .submit-btn {
+            width: 100%;
+            background: linear-gradient(135deg, var(--indigo), var(--indigo-light));
+            color: white;
+            border: none;
+            border-radius: var(--radius-sm);
+            padding: 16px;
+            font-size: 1rem;
+            font-weight: 600;
+            font-family: 'DM Sans', sans-serif;
+            cursor: pointer;
+            transition: all 0.25s;
+            box-shadow: 0 0 20px rgba(99,102,241,0.3);
+            margin-top: 8px;
+        }
+        .submit-btn:hover {
+            opacity: 0.9;
+            transform: translateY(-1px);
+            box-shadow: 0 4px 24px rgba(99,102,241,0.4);
+        }
+        .submit-btn:active { transform: translateY(0); }
+        .submit-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .error-msg {
+            font-size: 0.8rem;
+            color: var(--red);
+            margin-top: 6px;
+            display: none;
+        }
+        .error-msg.visible { display: block; }
+
+        /* Success */
+        .success-state {
+            display: none;
+            text-align: center;
+            padding: 48px 32px;
+        }
+        .success-state.visible { display: block; }
+        .success-icon {
+            font-size: 3rem;
+            margin-bottom: 20px;
+        }
+        .success-state h2 {
+            font-family: 'DM Serif Display', Georgia, serif;
+            font-size: 1.75rem;
+            margin-bottom: 12px;
+        }
+        .success-state p {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+        }
+
+        .form-card.hidden { display: none; }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 24px;
+            color: var(--text-tertiary);
+            font-size: 0.75rem;
+            border-top: 1px solid var(--surface-border);
+        }
+
+        @media (max-width: 560px) {
+            .form-card { padding: 28px 20px; }
+            main { padding: 40px 16px; }
+        }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <a href="/" class="logo">OnePrompt</a>
+        <a href="/" class="nav-back">← Back to site</a>
+    </nav>
+
+    <main>
+        <div class="form-wrapper">
+            <div class="form-header">
+                <div class="logo-icon">
+                    <span class="logo-icon-inner">O</span>
+                    <span class="logo-sparkle lg">✦</span>
+                    <span class="logo-sparkle md">✦</span>
+                    <span class="logo-sparkle sm">✦</span>
+                </div>
+                <h1>Join the Waitlist</h1>
+                <p>Be among the first to try OnePrompt.<br>Early access members help shape the product.</p>
+            </div>
+
+            <div class="form-card" id="formCard">
+                <form id="waitlistForm" novalidate>
+
+                    <!-- Email -->
+                    <div class="field">
+                        <label for="email">Email address <span class="required">*</span></label>
+                        <input type="email" id="email" name="entry.330776363" placeholder="you@example.com" required>
+                        <div class="error-msg" id="emailError">Please enter a valid email address.</div>
+                    </div>
+
+                    <!-- Use cases -->
+                    <div class="field">
+                        <label>What do you want OnePrompt to help you with most? <span class="required">*</span> <span class="hint">Select all that apply</span></label>
+                        <div class="options" id="useCases">
+                            <label class="option">
+                                <input type="checkbox" name="entry.841887150" value="Writing emails/messages">
+                                <span class="option-emoji">✉️</span>
+                                <span class="option-label">Writing emails & messages</span>
+                            </label>
+                            <label class="option">
+                                <input type="checkbox" name="entry.841887150" value="Recipes & meal planning">
+                                <span class="option-emoji">🍳</span>
+                                <span class="option-label">Recipes & meal planning</span>
+                            </label>
+                            <label class="option">
+                                <input type="checkbox" name="entry.841887150" value="Travel itineraries">
+                                <span class="option-emoji">✈️</span>
+                                <span class="option-label">Travel itineraries</span>
+                            </label>
+                            <label class="option">
+                                <input type="checkbox" name="entry.841887150" value="Work docs (PRDs, plans, proposals)">
+                                <span class="option-emoji">📋</span>
+                                <span class="option-label">Work docs (PRDs, plans, proposals)</span>
+                            </label>
+                            <label class="option">
+                                <input type="checkbox" name="entry.841887150" value="Other">
+                                <span class="option-emoji">💡</span>
+                                <span class="option-label">Something else</span>
+                            </label>
+                        </div>
+                        <div class="error-msg" id="useCaseError">Please select at least one option.</div>
+                    </div>
+
+                    <!-- AI preference -->
+                    <div class="field">
+                        <label>Which AI do you use most today? <span class="required">*</span></label>
+                        <div class="options" id="aiOptions">
+                            <label class="option">
+                                <input type="radio" name="entry.1286933285" value="Chat GPT">
+                                <span class="option-label">ChatGPT</span>
+                            </label>
+                            <label class="option">
+                                <input type="radio" name="entry.1286933285" value="Gemini">
+                                <span class="option-label">Gemini</span>
+                            </label>
+                            <label class="option">
+                                <input type="radio" name="entry.1286933285" value="Claude">
+                                <span class="option-label">Claude</span>
+                            </label>
+                            <label class="option">
+                                <input type="radio" name="entry.1286933285" value="Copilot">
+                                <span class="option-label">Copilot</span>
+                            </label>
+                            <label class="option">
+                                <input type="radio" name="entry.1286933285" value="Other">
+                                <span class="option-label">Other / I don't use one yet</span>
+                            </label>
+                        </div>
+                        <div class="error-msg" id="aiError">Please select an option.</div>
+                    </div>
+
+                    <button type="submit" class="submit-btn" id="submitBtn">
+                        Join the Waitlist →
+                    </button>
+
+                </form>
+            </div>
+
+            <!-- Success -->
+            <div class="success-state" id="successState">
+                <div class="success-icon">✨</div>
+                <h2>You're on the list!</h2>
+                <p>We'll reach out when early access opens.<br>Thanks for helping shape OnePrompt.</p>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        © 2026 OnePrompt · Privacy first · No spam, ever.
+    </footer>
+
+    <script>
+        // Highlight selected options visually
+        document.querySelectorAll('.option input').forEach(input => {
+            input.addEventListener('change', () => {
+                if (input.type === 'radio') {
+                    // Deselect siblings
+                    document.querySelectorAll(`input[name="${input.name}"]`).forEach(r => {
+                        r.closest('.option').classList.remove('selected');
+                    });
+                }
+                input.closest('.option').classList.toggle('selected', input.checked);
+            });
+        });
+
+        // Form submission
+        document.getElementById('waitlistForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            const email = document.getElementById('email');
+            const emailError = document.getElementById('emailError');
+            const useCaseError = document.getElementById('useCaseError');
+            const aiError = document.getElementById('aiError');
+            const submitBtn = document.getElementById('submitBtn');
+
+            let valid = true;
+
+            // Reset errors
+            emailError.classList.remove('visible');
+            useCaseError.classList.remove('visible');
+            aiError.classList.remove('visible');
+            email.classList.remove('error');
+
+            // Validate email
+            if (!email.value || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.value)) {
+                email.classList.add('error');
+                emailError.classList.add('visible');
+                valid = false;
+            }
+
+            // Validate use case
+            const useCases = document.querySelectorAll('input[name="entry.841887150"]:checked');
+            if (useCases.length === 0) {
+                useCaseError.classList.add('visible');
+                valid = false;
+            }
+
+            // Validate AI
+            const ai = document.querySelector('input[name="entry.1286933285"]:checked');
+            if (!ai) {
+                aiError.classList.add('visible');
+                valid = false;
+            }
+
+            if (!valid) return;
+
+            submitBtn.disabled = true;
+            submitBtn.textContent = 'Submitting…';
+
+            // Build form data
+            const formData = new FormData();
+            formData.append('entry.330776363', email.value);
+            useCases.forEach(cb => formData.append('entry.841887150', cb.value));
+            formData.append('entry.1286933285', ai.value);
+            formData.append('fvv', '1');
+            formData.append('pageHistory', '0');
+
+            try {
+                // Submit to Google Forms (no-cors — we can't read response, but it submits)
+                await fetch('https://docs.google.com/forms/d/e/1FAIpQLSePtz87PCBkgkhuXXsJukSRbbLf87-M6mInaFPhm973tkgbTw/formResponse', {
+                    method: 'POST',
+                    mode: 'no-cors',
+                    body: formData
+                });
+            } catch (_) {
+                // no-cors always throws on response read, but submission goes through
+            }
+
+            // Show success
+            document.getElementById('formCard').classList.add('hidden');
+            document.getElementById('successState').classList.add('visible');
+        });
+    </script>
+
+</body>
+</html>
