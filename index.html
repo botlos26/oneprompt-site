@@ -689,6 +689,7 @@
             <a href="#how" class="btn-secondary">See how it works</a>
         </div>
         <p class="hero-note">Free · No account required · Everything stays on your device</p>
+        <p class="hero-note" style="margin-top: 8px; color: var(--accent);">Private beta on TestFlight — early access helps shape the product.</p>
 
         <!-- App Mockup -->
         <div class="app-preview fade-up">
@@ -740,7 +741,7 @@
         <div class="container">
             <div class="centered fade-up">
                 <div class="section-label">The Difference</div>
-                <h2 class="section-title">One prompt is all it takes</h2>
+                <h2 class="section-title rotate-headline">One prompt is all it takes</h2>
                 <p class="section-desc">The same request. Dramatically different results.</p>
             </div>
             <div class="compare-grid fade-up">
@@ -792,13 +793,37 @@
         </div>
     </section>
 
+    <!-- Works With -->
+    <div class="container fade-up" style="padding: 60px 32px; text-align: center;">
+        <div class="section-label">Works with any AI app</div>
+        <div style="display: flex; justify-content: center; gap: 40px; margin-top: 24px; flex-wrap: wrap; align-items: center;">
+            <div style="display: flex; flex-direction: column; align-items: center; gap: 8px;">
+                <span style="font-size: 2rem;">🟢</span>
+                <span style="font-size: 0.85rem; color: var(--text-secondary); font-weight: 500;">ChatGPT</span>
+            </div>
+            <div style="display: flex; flex-direction: column; align-items: center; gap: 8px;">
+                <span style="font-size: 2rem;">🟠</span>
+                <span style="font-size: 0.85rem; color: var(--text-secondary); font-weight: 500;">Claude</span>
+            </div>
+            <div style="display: flex; flex-direction: column; align-items: center; gap: 8px;">
+                <span style="font-size: 2rem;">🔵</span>
+                <span style="font-size: 0.85rem; color: var(--text-secondary); font-weight: 500;">Gemini</span>
+            </div>
+            <div style="display: flex; flex-direction: column; align-items: center; gap: 8px;">
+                <span style="font-size: 2rem;">🟣</span>
+                <span style="font-size: 0.85rem; color: var(--text-secondary); font-weight: 500;">Copilot</span>
+            </div>
+        </div>
+        <p style="font-size: 0.85rem; color: var(--text-tertiary); margin-top: 20px;">Copy your prompt and open it directly in your favorite AI app.</p>
+    </div>
+
     <!-- Templates -->
     <div class="divider"></div>
     <section class="section" id="templates">
         <div class="container">
             <div class="centered fade-up">
                 <div class="section-label">Templates</div>
-                <h2 class="section-title">14 templates. Every task covered.</h2>
+                <h2 class="section-title">14 templates for the most common tasks.</h2>
                 <p class="section-desc">Start with proven templates for common tasks. Each one guides you through the right questions.</p>
             </div>
             <div class="templates-grid fade-up">
@@ -932,6 +957,29 @@
         }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
 
         document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+
+        // Rotating headline
+        const headlines = [
+            "One prompt is all it takes",
+            "Stop rewriting prompts",
+            "Get better output on the first try",
+            "From messy idea to AI-ready prompt"
+        ];
+        let headlineIdx = 0;
+        const headlineEl = document.querySelector('.rotate-headline');
+        if (headlineEl) {
+            setInterval(() => {
+                headlineIdx = (headlineIdx + 1) % headlines.length;
+                headlineEl.style.opacity = '0';
+                headlineEl.style.transform = 'translateY(8px)';
+                setTimeout(() => {
+                    headlineEl.textContent = headlines[headlineIdx];
+                    headlineEl.style.opacity = '1';
+                    headlineEl.style.transform = 'translateY(0)';
+                }, 400);
+            }, 4000);
+            headlineEl.style.transition = 'opacity 0.4s ease, transform 0.4s ease';
+        }
     </script>
 
 </body>
