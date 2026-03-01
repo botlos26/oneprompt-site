@@ -1,0 +1,541 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OnePrompt — Better AI Results Without Prompt Engineering</title>
+    <meta name="description" content="OnePrompt turns your everyday ideas into structured, ready-to-paste prompts for ChatGPT, Claude, Gemini, or Copilot. No technical skills required.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #0a0a0a;
+            --surface: #141414;
+            --surface-hover: #1a1a1a;
+            --border: #222;
+            --text: #f5f5f5;
+            --text-secondary: #888;
+            --accent: #6366f1;
+            --accent-hover: #818cf8;
+            --accent-glow: rgba(99, 102, 241, 0.15);
+            --green: #22c55e;
+            --radius: 16px;
+            --radius-sm: 10px;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* Nav */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 100;
+            padding: 16px 0;
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            background: rgba(10, 10, 10, 0.8);
+            border-bottom: 1px solid var(--border);
+        }
+        .nav-inner {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 0 24px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .logo {
+            font-size: 1.25rem;
+            font-weight: 800;
+            letter-spacing: -0.02em;
+        }
+        .nav-cta {
+            background: var(--accent);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-size: 0.875rem;
+            font-weight: 600;
+            transition: background 0.2s;
+        }
+        .nav-cta:hover { background: var(--accent-hover); }
+
+        /* Sections */
+        section {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 100px 24px;
+        }
+
+        /* Hero */
+        .hero {
+            padding-top: 160px;
+            text-align: center;
+        }
+        .hero-badge {
+            display: inline-block;
+            background: var(--accent-glow);
+            border: 1px solid rgba(99, 102, 241, 0.3);
+            color: var(--accent-hover);
+            padding: 6px 16px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            margin-bottom: 24px;
+        }
+        .hero h1 {
+            font-size: clamp(2.5rem, 6vw, 4rem);
+            font-weight: 800;
+            letter-spacing: -0.03em;
+            line-height: 1.1;
+            margin-bottom: 20px;
+        }
+        .hero h1 span { color: var(--accent); }
+        .hero p {
+            font-size: 1.15rem;
+            color: var(--text-secondary);
+            max-width: 600px;
+            margin: 0 auto 40px;
+        }
+        .hero-cta {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: var(--accent);
+            color: white;
+            padding: 14px 28px;
+            border-radius: 10px;
+            text-decoration: none;
+            font-size: 1rem;
+            font-weight: 600;
+            transition: all 0.2s;
+        }
+        .hero-cta:hover {
+            background: var(--accent-hover);
+            transform: translateY(-1px);
+        }
+        .hero-sub {
+            margin-top: 16px;
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+        }
+
+        /* Section headers */
+        .section-label {
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: var(--accent);
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            margin-bottom: 12px;
+        }
+        .section-title {
+            font-size: clamp(1.75rem, 4vw, 2.5rem);
+            font-weight: 800;
+            letter-spacing: -0.02em;
+            margin-bottom: 16px;
+        }
+        .section-desc {
+            font-size: 1.05rem;
+            color: var(--text-secondary);
+            max-width: 600px;
+        }
+        .centered { text-align: center; }
+        .centered .section-desc { margin: 0 auto; }
+
+        /* Before/After */
+        .compare-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 24px;
+            margin-top: 48px;
+        }
+        .compare-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 32px;
+        }
+        .compare-card.after {
+            border-color: rgba(99, 102, 241, 0.3);
+            background: linear-gradient(135deg, var(--surface), rgba(99, 102, 241, 0.05));
+        }
+        .compare-label {
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            margin-bottom: 16px;
+        }
+        .compare-card:first-child .compare-label { color: #ef4444; }
+        .compare-card.after .compare-label { color: var(--green); }
+        .compare-card blockquote {
+            font-style: italic;
+            color: var(--text-secondary);
+            line-height: 1.7;
+            font-size: 0.95rem;
+        }
+        .compare-note {
+            margin-top: 16px;
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+        }
+
+        /* Steps */
+        .steps-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 24px;
+            margin-top: 48px;
+        }
+        .step {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 32px 24px;
+            text-align: center;
+            transition: border-color 0.2s;
+        }
+        .step:hover { border-color: rgba(99, 102, 241, 0.3); }
+        .step-num {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            background: var(--accent-glow);
+            border: 1px solid rgba(99, 102, 241, 0.3);
+            color: var(--accent-hover);
+            border-radius: 10px;
+            font-weight: 700;
+            font-size: 1rem;
+            margin-bottom: 16px;
+        }
+        .step h3 {
+            font-size: 1rem;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+        .step p {
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+        }
+
+        /* Templates */
+        .templates-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+            gap: 16px;
+            margin-top: 48px;
+        }
+        .template-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-sm);
+            padding: 20px;
+            text-align: center;
+            transition: all 0.2s;
+        }
+        .template-card:hover {
+            border-color: rgba(99, 102, 241, 0.3);
+            transform: translateY(-2px);
+        }
+        .template-icon {
+            font-size: 2rem;
+            margin-bottom: 10px;
+        }
+        .template-card h4 {
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+
+        /* Privacy */
+        .privacy-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+            margin-top: 48px;
+        }
+        .privacy-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 28px 20px;
+            text-align: center;
+        }
+        .privacy-icon {
+            font-size: 1.75rem;
+            margin-bottom: 12px;
+        }
+        .privacy-card h4 {
+            font-size: 0.9rem;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+        .privacy-card p {
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+        }
+
+        /* FAQ */
+        .faq-list {
+            max-width: 700px;
+            margin: 48px auto 0;
+        }
+        .faq-item {
+            border-bottom: 1px solid var(--border);
+            padding: 24px 0;
+        }
+        .faq-item summary {
+            font-weight: 600;
+            font-size: 1rem;
+            cursor: pointer;
+            list-style: none;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .faq-item summary::after {
+            content: '+';
+            font-size: 1.25rem;
+            color: var(--text-secondary);
+            transition: transform 0.2s;
+        }
+        .faq-item[open] summary::after {
+            content: '−';
+        }
+        .faq-item p {
+            margin-top: 12px;
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+        }
+
+        /* CTA */
+        .final-cta {
+            text-align: center;
+            padding: 80px 24px 120px;
+        }
+        .final-cta h2 {
+            font-size: clamp(1.75rem, 4vw, 2.5rem);
+            font-weight: 800;
+            letter-spacing: -0.02em;
+            margin-bottom: 16px;
+        }
+        .final-cta p {
+            color: var(--text-secondary);
+            font-size: 1.05rem;
+            max-width: 500px;
+            margin: 0 auto 32px;
+        }
+
+        /* Footer */
+        footer {
+            border-top: 1px solid var(--border);
+            padding: 32px 24px;
+            text-align: center;
+            color: var(--text-secondary);
+            font-size: 0.8rem;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .compare-grid,
+            .steps-grid,
+            .privacy-grid {
+                grid-template-columns: 1fr;
+            }
+            .templates-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Nav -->
+    <nav>
+        <div class="nav-inner">
+            <div class="logo">OnePrompt</div>
+            <a href="https://docs.google.com/forms/d/e/1FAIpQLSePtz87PCBkgkhuXXsJukSRbbLf87-M6mInaFPhm973tkgbTw/viewform" class="nav-cta" target="_blank">Join Waitlist</a>
+        </div>
+    </nav>
+
+    <!-- Hero -->
+    <section class="hero">
+        <div class="hero-badge">📱 iOS App — Early Access</div>
+        <h1>Better AI Results.<br><span>No Prompt Engineering.</span></h1>
+        <p>Just type what you need — OnePrompt turns your idea into a structured, ready-to-paste prompt for ChatGPT, Claude, Gemini, or Copilot.</p>
+        <a href="https://docs.google.com/forms/d/e/1FAIpQLSePtz87PCBkgkhuXXsJukSRbbLf87-M6mInaFPhm973tkgbTw/viewform" class="hero-cta" target="_blank">
+            Join the Waitlist →
+        </a>
+        <p class="hero-sub">Free. No account required. Everything stays on your device.</p>
+    </section>
+
+    <!-- Before / After -->
+    <section>
+        <div class="centered">
+            <div class="section-label">The Problem</div>
+            <h2 class="section-title">Before vs. After OnePrompt</h2>
+        </div>
+        <div class="compare-grid">
+            <div class="compare-card">
+                <div class="compare-label">❌ What you type</div>
+                <blockquote>"Write me an email to my boss about the project delay"</blockquote>
+                <p class="compare-note">Vague, missing context, unclear tone — AI gives you generic results that need heavy editing.</p>
+            </div>
+            <div class="compare-card after">
+                <div class="compare-label">✅ What OnePrompt creates</div>
+                <blockquote>"Draft a professional email to my manager explaining a 2-week project delay. Tone: apologetic but solution-focused. Context: Client requested scope changes mid-sprint. Include: brief explanation, revised timeline, proactive next steps. Length: 150–200 words."</blockquote>
+                <p class="compare-note">Clear, structured, ready to paste — AI delivers better results with fewer revisions.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- How it Works -->
+    <section>
+        <div class="centered">
+            <div class="section-label">How It Works</div>
+            <h2 class="section-title">Four Steps to a Better Prompt</h2>
+            <p class="section-desc">No prompt engineering. No guesswork. Just better results, faster.</p>
+        </div>
+        <div class="steps-grid">
+            <div class="step">
+                <div class="step-num">1</div>
+                <h3>Type Your Idea</h3>
+                <p>Describe what you need in plain English. "Write an email to my boss about the deadline."</p>
+            </div>
+            <div class="step">
+                <div class="step-num">2</div>
+                <h3>We Find the Flow</h3>
+                <p>OnePrompt matches your intent to the right guided template automatically.</p>
+            </div>
+            <div class="step">
+                <div class="step-num">3</div>
+                <h3>Answer Quick Questions</h3>
+                <p>Fill in the context — recipient, tone, constraints. Skip what you don't need.</p>
+            </div>
+            <div class="step">
+                <div class="step-num">4</div>
+                <h3>Copy & Open</h3>
+                <p>Your structured prompt is ready. Copy it into ChatGPT, Claude, Gemini, or Copilot.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Templates -->
+    <section>
+        <div class="centered">
+            <div class="section-label">Ready-Made Templates</div>
+            <h2 class="section-title">14 Templates. Every Task Covered.</h2>
+            <p class="section-desc">Start with proven templates for common tasks. Each one guides you through the right questions.</p>
+        </div>
+        <div class="templates-grid">
+            <div class="template-card"><div class="template-icon">✉️</div><h4>Professional Email</h4></div>
+            <div class="template-card"><div class="template-icon">📝</div><h4>Summarize Notes</h4></div>
+            <div class="template-card"><div class="template-icon">🔍</div><h4>Research Brief</h4></div>
+            <div class="template-card"><div class="template-icon">🍳</div><h4>Recipe Generator</h4></div>
+            <div class="template-card"><div class="template-icon">✍️</div><h4>Draft Writing</h4></div>
+            <div class="template-card"><div class="template-icon">✈️</div><h4>Travel Itinerary</h4></div>
+            <div class="template-card"><div class="template-icon">📄</div><h4>Cover Letter</h4></div>
+            <div class="template-card"><div class="template-icon">📱</div><h4>Social Media Post</h4></div>
+            <div class="template-card"><div class="template-icon">📋</div><h4>Meeting Agenda</h4></div>
+            <div class="template-card"><div class="template-icon">💡</div><h4>Explain Simply</h4></div>
+            <div class="template-card"><div class="template-icon">📰</div><h4>Blog Post Outline</h4></div>
+            <div class="template-card"><div class="template-icon">💻</div><h4>Code Review</h4></div>
+            <div class="template-card"><div class="template-icon">🚀</div><h4>Feature Request</h4></div>
+            <div class="template-card"><div class="template-icon">💪</div><h4>Fitness Plan</h4></div>
+        </div>
+    </section>
+
+    <!-- Privacy -->
+    <section>
+        <div class="centered">
+            <div class="section-label">Privacy</div>
+            <h2 class="section-title">What We Refuse to Do</h2>
+            <p class="section-desc">Your prompts are yours. Period.</p>
+        </div>
+        <div class="privacy-grid">
+            <div class="privacy-card">
+                <div class="privacy-icon">🔒</div>
+                <h4>No Accounts</h4>
+                <p>Download and use immediately. No email, password, or profile required.</p>
+            </div>
+            <div class="privacy-card">
+                <div class="privacy-icon">📡</div>
+                <h4>No Backend</h4>
+                <p>Everything happens on your device. We can't see your prompts because we never receive them.</p>
+            </div>
+            <div class="privacy-card">
+                <div class="privacy-icon">🤖</div>
+                <h4>No AI Calls</h4>
+                <p>We don't run AI models or send your text anywhere. OnePrompt is a translator, not an AI.</p>
+            </div>
+            <div class="privacy-card">
+                <div class="privacy-icon">🚫</div>
+                <h4>No Data Collection</h4>
+                <p>Your prompts are yours. We don't collect, analyze, or monetize your content — ever.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ -->
+    <section>
+        <div class="centered">
+            <div class="section-label">FAQ</div>
+            <h2 class="section-title">Frequently Asked Questions</h2>
+        </div>
+        <div class="faq-list">
+            <details class="faq-item">
+                <summary>Is this prompt engineering?</summary>
+                <p>No. Prompt engineering requires technical knowledge of how AI models work. OnePrompt is a guided translator — you answer simple questions in plain English, and it structures your thoughts into an effective prompt. No technical skills needed.</p>
+            </details>
+            <details class="faq-item">
+                <summary>Does it work with ChatGPT, Claude, Gemini, and Copilot?</summary>
+                <p>Yes! OnePrompt creates universal prompts you can copy and paste into any AI tool. It doesn't matter which AI you prefer — the improved prompts work everywhere.</p>
+            </details>
+            <details class="faq-item">
+                <summary>Does OnePrompt send my text anywhere?</summary>
+                <p>Absolutely not. OnePrompt is completely local-first with no backend servers. Everything happens on your device. Your prompts never leave your phone.</p>
+            </details>
+            <details class="faq-item">
+                <summary>Does OnePrompt call an AI model?</summary>
+                <p>No. OnePrompt doesn't run AI or connect to any language models. It's a smart template system that helps you organize your thoughts into structured prompts. You then paste those prompts into your preferred AI tool.</p>
+            </details>
+            <details class="faq-item">
+                <summary>How many templates are available?</summary>
+                <p>OnePrompt ships with 14 ready-made templates covering email, writing, research, recipes, travel, fitness, social media, meetings, and more. Each template guides you through the right questions to get better AI results.</p>
+            </details>
+            <details class="faq-item">
+                <summary>When can I try OnePrompt?</summary>
+                <p>We're currently in private beta via TestFlight. Join the waitlist to get early access — waitlist members are the first to try new features and help shape the product.</p>
+            </details>
+        </div>
+    </section>
+
+    <!-- Final CTA -->
+    <section class="final-cta">
+        <h2>Stop Struggling With AI.<br>Start Getting Results.</h2>
+        <p>Join early adopters who are tired of rewriting prompts and ready for better AI results with fewer revisions.</p>
+        <a href="https://docs.google.com/forms/d/e/1FAIpQLSePtz87PCBkgkhuXXsJukSRbbLf87-M6mInaFPhm973tkgbTw/viewform" class="hero-cta" target="_blank">
+            Join the Waitlist →
+        </a>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <p>© 2026 OnePrompt. Built with intention. Privacy first.</p>
+    </footer>
+
+</body>
+</html>
