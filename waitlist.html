@@ -504,23 +504,23 @@
             submitBtn.disabled = true;
             submitBtn.textContent = 'Submitting…';
 
-            // Build form data
-            const formData = new FormData();
-            formData.append('entry.330776363', email.value);
-            useCases.forEach(cb => formData.append('entry.841887150', cb.value));
-            formData.append('entry.1286933285', ai.value);
-            formData.append('fvv', '1');
-            formData.append('pageHistory', '0');
+            // Build URL-encoded params (required format for Google Forms)
+            const params = new URLSearchParams();
+            params.append('entry.330776363', email.value);
+            useCases.forEach(cb => params.append('entry.841887150', cb.value));
+            params.append('entry.1286933285', ai.value);
+            params.append('fvv', '1');
+            params.append('pageHistory', '0');
 
             try {
-                // Submit to Google Forms (no-cors — we can't read response, but it submits)
                 await fetch('https://docs.google.com/forms/d/e/1FAIpQLSePtz87PCBkgkhuXXsJukSRbbLf87-M6mInaFPhm973tkgbTw/formResponse', {
                     method: 'POST',
                     mode: 'no-cors',
-                    body: formData
+                    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                    body: params.toString()
                 });
             } catch (_) {
-                // no-cors always throws on response read, but submission goes through
+                // no-cors suppresses response — submission goes through regardless
             }
 
             // Show success
