@@ -1,0 +1,761 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>OnePrompt — Demo Reel</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=DM+Serif+Display&display=swap" rel="stylesheet">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: #000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    font-family: 'DM Sans', sans-serif;
+  }
+
+  /* Phone shell */
+  .phone {
+    width: 390px;
+    height: 844px;
+    background: #0A0E1A;
+    border-radius: 50px;
+    border: 2px solid rgba(99,102,241,0.3);
+    box-shadow:
+      0 0 60px rgba(99,102,241,0.15),
+      0 0 120px rgba(99,102,241,0.08),
+      inset 0 0 30px rgba(0,0,0,0.5);
+    position: relative;
+    overflow: hidden;
+  }
+
+  /* Dynamic island */
+  .island {
+    position: absolute;
+    top: 14px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 120px;
+    height: 34px;
+    background: #000;
+    border-radius: 20px;
+    z-index: 100;
+  }
+
+  /* Scenes container */
+  .scenes {
+    position: absolute;
+    inset: 0;
+    border-radius: 48px;
+    overflow: hidden;
+  }
+
+  .scene {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transition: opacity 0.6s ease;
+    pointer-events: none;
+  }
+  .scene.active { opacity: 1; pointer-events: auto; }
+
+  /* ── SCENE 1: Logo intro ── */
+  #s1 {
+    background: radial-gradient(ellipse at center, #111827 0%, #0A0E1A 70%);
+  }
+  .s1-logo {
+    width: 100px;
+    height: 100px;
+    background: #0A0E1A;
+    border-radius: 22px;
+    border: 1.5px solid transparent;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 0 40px rgba(99,102,241,0.35);
+    margin-bottom: 28px;
+  }
+  .s1-logo::before {
+    content: '';
+    position: absolute;
+    inset: -1.5px;
+    border-radius: 23.5px;
+    background: linear-gradient(135deg, #4f6ef7, #6366f1);
+    z-index: -1;
+  }
+  .s1-o {
+    font-family: 'DM Serif Display', serif;
+    font-size: 52px;
+    color: white;
+    margin-left: -4px;
+    margin-top: 2px;
+  }
+  .sparkle { position: absolute; color: #F0C040; line-height: 1; }
+  .sp1 { top: 10px; right: 13px; font-size: 22px; }
+  .sp2 { top: 32px; right: 6px; font-size: 13px; }
+  .sp3 { top: 50px; right: 18px; font-size: 9px; }
+
+  .s1-title {
+    font-family: 'DM Serif Display', serif;
+    font-size: 34px;
+    color: white;
+    margin-bottom: 10px;
+    letter-spacing: -0.5px;
+    text-align: center;
+  }
+  .s1-sub {
+    font-size: 15px;
+    color: rgba(255,255,255,0.5);
+    text-align: center;
+    line-height: 1.5;
+    padding: 0 40px;
+  }
+
+  .glow-ring {
+    position: absolute;
+    width: 300px;
+    height: 300px;
+    border-radius: 50%;
+    border: 1px solid rgba(99,102,241,0.12);
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    animation: pulse-ring 3s ease-in-out infinite;
+  }
+  .glow-ring-2 {
+    position: absolute;
+    width: 450px;
+    height: 450px;
+    border-radius: 50%;
+    border: 1px solid rgba(99,102,241,0.06);
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    animation: pulse-ring 3s ease-in-out infinite 1s;
+  }
+  @keyframes pulse-ring {
+    0%, 100% { opacity: 0.4; transform: translate(-50%,-50%) scale(1); }
+    50% { opacity: 1; transform: translate(-50%,-50%) scale(1.04); }
+  }
+
+  /* ── SCENE 2: The Problem ── */
+  #s2 {
+    background: #0A0E1A;
+    padding: 60px 28px 0;
+    justify-content: flex-start;
+  }
+  .s2-label {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    color: rgba(255,255,255,0.3);
+    text-transform: uppercase;
+    margin-bottom: 16px;
+    margin-top: 40px;
+    align-self: flex-start;
+  }
+  .s2-bubble {
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 16px;
+    padding: 18px 20px;
+    align-self: flex-start;
+    max-width: 300px;
+    margin-bottom: 16px;
+  }
+  .s2-bubble p {
+    font-size: 14px;
+    color: rgba(255,255,255,0.6);
+    line-height: 1.5;
+  }
+  .s2-arrow {
+    font-size: 28px;
+    margin: 12px 0;
+  }
+  .s2-result {
+    background: rgba(248, 113, 113, 0.08);
+    border: 1px solid rgba(248,113,113,0.2);
+    border-radius: 16px;
+    padding: 16px 20px;
+    align-self: flex-start;
+    max-width: 310px;
+  }
+  .s2-result p {
+    font-size: 13px;
+    color: rgba(248,113,113,0.9);
+    line-height: 1.5;
+  }
+  .s2-result .label-bad {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    color: rgba(248,113,113,0.5);
+    text-transform: uppercase;
+    margin-bottom: 6px;
+  }
+  .s2-heading {
+    font-family: 'DM Serif Display', serif;
+    font-size: 26px;
+    color: white;
+    text-align: center;
+    line-height: 1.3;
+    margin-bottom: 12px;
+  }
+  .s2-sub {
+    font-size: 14px;
+    color: rgba(255,255,255,0.45);
+    text-align: center;
+    line-height: 1.5;
+    padding: 0 20px;
+  }
+
+  /* ── SCENE 3: App — input ── */
+  #s3 {
+    background: #0A0E1A;
+    justify-content: flex-start;
+    padding-top: 60px;
+  }
+  .app-nav {
+    width: 100%;
+    padding: 16px 24px 0;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 24px;
+  }
+  .app-logo-sm {
+    width: 32px;
+    height: 32px;
+    background: #0A0E1A;
+    border-radius: 8px;
+    border: 1px solid rgba(99,102,241,0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 0 12px rgba(99,102,241,0.25);
+    flex-shrink: 0;
+  }
+  .app-logo-sm span { font-family: 'DM Serif Display', serif; font-size: 16px; color: white; margin-left: -2px; }
+  .app-nav-title { font-size: 16px; font-weight: 600; color: white; }
+
+  .app-body { width: 100%; padding: 0 24px; }
+  .app-label {
+    font-size: 12px;
+    font-weight: 600;
+    color: rgba(255,255,255,0.4);
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    margin-bottom: 12px;
+  }
+  .app-input-box {
+    background: rgba(28,37,64,0.5);
+    border: 1px solid rgba(99,102,241,0.5);
+    border-radius: 14px;
+    padding: 18px;
+    box-shadow: 0 0 20px rgba(99,102,241,0.15);
+    margin-bottom: 20px;
+    min-height: 100px;
+  }
+  .app-input-box p {
+    font-size: 15px;
+    color: white;
+    line-height: 1.6;
+  }
+  .cursor {
+    display: inline-block;
+    width: 2px;
+    height: 16px;
+    background: #6366f1;
+    margin-left: 1px;
+    vertical-align: middle;
+    animation: blink 1s step-end infinite;
+  }
+  @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0} }
+
+  .app-cta-btn {
+    width: 100%;
+    background: linear-gradient(135deg, #6366f1, #818cf8);
+    border: none;
+    border-radius: 14px;
+    padding: 16px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 16px;
+    font-weight: 600;
+    color: white;
+    box-shadow: 0 0 24px rgba(99,102,241,0.35);
+  }
+
+  /* ── SCENE 4: App — questions ── */
+  #s4 {
+    background: #0A0E1A;
+    justify-content: flex-start;
+    padding-top: 60px;
+  }
+  .q-header {
+    width: 100%;
+    padding: 16px 24px 0;
+    margin-bottom: 20px;
+  }
+  .q-template-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: rgba(99,102,241,0.12);
+    border: 1px solid rgba(99,102,241,0.25);
+    border-radius: 20px;
+    padding: 6px 14px;
+    font-size: 12px;
+    color: #818cf8;
+    font-weight: 500;
+    margin-bottom: 12px;
+  }
+  .q-title {
+    font-size: 20px;
+    font-weight: 700;
+    color: white;
+    margin-bottom: 4px;
+  }
+  .q-sub {
+    font-size: 13px;
+    color: rgba(255,255,255,0.4);
+  }
+
+  .seg-control {
+    display: flex;
+    background: rgba(28,37,64,0.6);
+    border-radius: 10px;
+    padding: 3px;
+    margin: 0 24px 20px;
+  }
+  .seg-btn {
+    flex: 1;
+    padding: 8px;
+    border-radius: 8px;
+    font-size: 13px;
+    font-weight: 600;
+    text-align: center;
+    color: rgba(255,255,255,0.4);
+  }
+  .seg-btn.active {
+    background: #6366f1;
+    color: white;
+    box-shadow: 0 0 12px rgba(99,102,241,0.3);
+  }
+
+  .q-list { width: 100%; padding: 0 24px; display: flex; flex-direction: column; gap: 12px; }
+  .q-card {
+    background: rgba(28,37,64,0.5);
+    border: 1px solid rgba(255,255,255,0.07);
+    border-radius: 14px;
+    padding: 16px;
+    opacity: 0;
+    transform: translateY(12px);
+    transition: all 0.4s ease;
+  }
+  .q-card.show { opacity: 1; transform: translateY(0); }
+  .q-card-label { font-size: 11px; font-weight: 600; color: rgba(255,255,255,0.3); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 6px; }
+  .q-card-text { font-size: 14px; color: white; font-weight: 500; margin-bottom: 10px; }
+  .q-answer {
+    background: rgba(99,102,241,0.1);
+    border: 1px solid rgba(99,102,241,0.3);
+    border-radius: 10px;
+    padding: 10px 14px;
+    font-size: 13px;
+    color: #818cf8;
+  }
+
+  /* ── SCENE 5: Generated Prompt ── */
+  #s5 {
+    background: #0A0E1A;
+    justify-content: flex-start;
+    padding-top: 60px;
+  }
+  .gen-header {
+    width: 100%;
+    padding: 16px 24px 0;
+    margin-bottom: 16px;
+  }
+  .gen-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: rgba(74,222,128,0.1);
+    border: 1px solid rgba(74,222,128,0.25);
+    border-radius: 20px;
+    padding: 5px 12px;
+    font-size: 12px;
+    color: #4ade80;
+    font-weight: 600;
+    margin-bottom: 10px;
+  }
+  .gen-title {
+    font-size: 20px;
+    font-weight: 700;
+    color: white;
+    margin-bottom: 4px;
+  }
+  .gen-prompt-box {
+    margin: 0 24px;
+    background: linear-gradient(135deg, rgba(28,37,64,0.8), rgba(17,24,39,0.6));
+    border: 1px solid rgba(99,102,241,0.25);
+    border-radius: 16px;
+    padding: 20px;
+    box-shadow: 0 0 30px rgba(99,102,241,0.1);
+    position: relative;
+    overflow: hidden;
+  }
+  .gen-prompt-box::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(99,102,241,0.5), transparent);
+  }
+  .gen-prompt-text {
+    font-size: 13px;
+    color: rgba(255,255,255,0.85);
+    line-height: 1.7;
+  }
+  .gen-prompt-text .highlight {
+    color: #818cf8;
+    font-weight: 500;
+  }
+  .gen-actions {
+    display: flex;
+    gap: 10px;
+    margin: 16px 24px 0;
+  }
+  .gen-btn-copy {
+    flex: 1;
+    background: linear-gradient(135deg, #6366f1, #818cf8);
+    border: none;
+    border-radius: 12px;
+    padding: 14px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+    color: white;
+    box-shadow: 0 0 20px rgba(99,102,241,0.3);
+  }
+  .gen-btn-open {
+    flex: 1;
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 12px;
+    padding: 14px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+    color: rgba(255,255,255,0.7);
+  }
+
+  /* ── SCENE 6: CTA ── */
+  #s6 {
+    background: radial-gradient(ellipse at 50% 40%, #111827 0%, #0A0E1A 65%);
+    text-align: center;
+    padding: 0 32px;
+  }
+  .cta-tag {
+    display: inline-block;
+    background: rgba(240,192,64,0.12);
+    border: 1px solid rgba(240,192,64,0.25);
+    border-radius: 20px;
+    padding: 6px 16px;
+    font-size: 12px;
+    font-weight: 600;
+    color: #F0C040;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin-bottom: 24px;
+  }
+  .cta-headline {
+    font-family: 'DM Serif Display', serif;
+    font-size: 30px;
+    color: white;
+    line-height: 1.2;
+    margin-bottom: 14px;
+  }
+  .cta-sub {
+    font-size: 14px;
+    color: rgba(255,255,255,0.45);
+    line-height: 1.6;
+    margin-bottom: 32px;
+  }
+  .cta-url {
+    background: rgba(99,102,241,0.1);
+    border: 1px solid rgba(99,102,241,0.3);
+    border-radius: 14px;
+    padding: 16px 24px;
+    margin-bottom: 20px;
+  }
+  .cta-url p {
+    font-size: 13px;
+    color: rgba(255,255,255,0.4);
+    margin-bottom: 4px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-size: 11px;
+    font-weight: 600;
+  }
+  .cta-url span {
+    font-size: 20px;
+    font-weight: 700;
+    color: #818cf8;
+  }
+  .cta-sparkles {
+    font-size: 28px;
+    letter-spacing: 8px;
+    color: #F0C040;
+    opacity: 0.8;
+  }
+
+  /* Progress bar */
+  .progress-bar {
+    position: absolute;
+    bottom: 24px;
+    left: 28px;
+    right: 28px;
+    display: flex;
+    gap: 6px;
+    z-index: 50;
+  }
+  .prog-seg {
+    flex: 1;
+    height: 3px;
+    background: rgba(255,255,255,0.12);
+    border-radius: 2px;
+    overflow: hidden;
+  }
+  .prog-fill {
+    height: 100%;
+    background: rgba(255,255,255,0.8);
+    width: 0%;
+    transition: width linear;
+  }
+
+</style>
+</head>
+<body>
+
+<div class="phone">
+  <div class="island"></div>
+
+  <div class="scenes">
+
+    <!-- SCENE 1: Brand intro -->
+    <div class="scene active" id="s1">
+      <div class="glow-ring"></div>
+      <div class="glow-ring-2"></div>
+      <div class="s1-logo">
+        <span class="s1-o">O</span>
+        <span class="sparkle sp1">✦</span>
+        <span class="sparkle sp2">✦</span>
+        <span class="sparkle sp3">✦</span>
+      </div>
+      <div class="s1-title">OnePrompt</div>
+      <div class="s1-sub">Turn any idea into a prompt that actually works.</div>
+    </div>
+
+    <!-- SCENE 2: The problem -->
+    <div class="scene" id="s2">
+      <div class="s2-heading">Your prompts are<br>holding you back.</div>
+      <div class="s2-sub">Vague inputs = vague outputs. Most people never fix this.</div>
+      <div style="margin-top: 28px; width: 100%; padding: 0 28px; display: flex; flex-direction: column; gap: 12px;">
+        <div class="s2-bubble">
+          <p>❌ "Write me a cover letter"</p>
+        </div>
+        <div style="font-size: 22px; padding-left: 28px;">↓</div>
+        <div class="s2-result">
+          <div class="label-bad">AI output</div>
+          <p>"Dear Hiring Manager, I am writing to express my interest in the position at your esteemed company…"</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- SCENE 3: App — input -->
+    <div class="scene" id="s3">
+      <div class="app-nav">
+        <div class="app-logo-sm"><span>O</span></div>
+        <div class="app-nav-title">OnePrompt</div>
+      </div>
+      <div class="app-body">
+        <div class="app-label">What do you need?</div>
+        <div class="app-input-box">
+          <p id="typeTarget"></p>
+        </div>
+        <button class="app-cta-btn">Build My Prompt →</button>
+      </div>
+    </div>
+
+    <!-- SCENE 4: App — questions -->
+    <div class="scene" id="s4">
+      <div class="q-header">
+        <div class="q-template-tag">✉️ Cover Letter</div>
+        <div class="q-title">A few quick questions</div>
+        <div class="q-sub">We'll build the perfect prompt for you</div>
+      </div>
+      <div class="seg-control">
+        <div class="seg-btn active">Required</div>
+        <div class="seg-btn">Optimize</div>
+      </div>
+      <div class="q-list">
+        <div class="q-card" id="q1">
+          <div class="q-card-label">Company & Role</div>
+          <div class="q-card-text">What role are you applying for?</div>
+          <div class="q-answer">Senior Marketing Manager at Spotify</div>
+        </div>
+        <div class="q-card" id="q2">
+          <div class="q-card-label">Your Background</div>
+          <div class="q-card-text">Key experience to highlight?</div>
+          <div class="q-answer">5 years in B2B SaaS, grew pipeline 3x</div>
+        </div>
+        <div class="q-card" id="q3">
+          <div class="q-card-label">Tone</div>
+          <div class="q-card-text">How should it sound?</div>
+          <div class="q-answer">Confident, direct, not corporate</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SCENE 5: Generated prompt -->
+    <div class="scene" id="s5">
+      <div class="gen-header">
+        <div class="gen-badge">✓ Prompt ready</div>
+        <div class="gen-title">Your prompt is built.</div>
+      </div>
+      <div class="gen-prompt-box">
+        <div class="gen-prompt-text">
+          Write a <span class="highlight">confident, direct cover letter</span> for a <span class="highlight">Senior Marketing Manager</span> role at Spotify. The applicant has <span class="highlight">5 years in B2B SaaS</span> and grew pipeline 3x. <span class="highlight">Avoid corporate filler.</span> Open with a hook. Keep it under 300 words.
+        </div>
+      </div>
+      <div class="gen-actions">
+        <button class="gen-btn-copy">Copy Prompt</button>
+        <button class="gen-btn-open">Open in ChatGPT</button>
+      </div>
+    </div>
+
+    <!-- SCENE 6: CTA -->
+    <div class="scene" id="s6">
+      <div class="cta-tag">✦ Early Access</div>
+      <div class="cta-headline">Prompt smarter.<br>Get better results.</div>
+      <div class="cta-sub">No prompt engineering needed.<br>Works with ChatGPT, Claude, Gemini & more.</div>
+      <div class="cta-url">
+        <p>Join the waitlist at</p>
+        <span>oneprompt.info</span>
+      </div>
+      <div class="cta-sparkles">✦ ✦ ✦</div>
+    </div>
+
+  </div><!-- /scenes -->
+
+  <!-- Progress bar -->
+  <div class="progress-bar" id="progressBar"></div>
+</div>
+
+<script>
+const SCENES = [
+  { id: 's1', duration: 3000 },
+  { id: 's2', duration: 4500 },
+  { id: 's3', duration: 4000 },
+  { id: 's4', duration: 5000 },
+  { id: 's5', duration: 4500 },
+  { id: 's6', duration: 5000 },
+];
+
+let currentScene = 0;
+let timer = null;
+
+// Build progress bar
+const bar = document.getElementById('progressBar');
+SCENES.forEach((_, i) => {
+  const seg = document.createElement('div');
+  seg.className = 'prog-seg';
+  seg.innerHTML = '<div class="prog-fill" id="pf' + i + '"></div>';
+  bar.appendChild(seg);
+});
+
+function runScene(index) {
+  if (index >= SCENES.length) { index = 0; } // loop
+  const prev = currentScene;
+  currentScene = index;
+
+  // Deactivate all
+  SCENES.forEach((s, i) => {
+    document.getElementById(s.id).classList.remove('active');
+    document.getElementById('pf' + i).style.transition = 'none';
+    document.getElementById('pf' + i).style.width = i < index ? '100%' : '0%';
+  });
+
+  // Activate current
+  const scene = SCENES[index];
+  const el = document.getElementById(scene.id);
+  el.classList.add('active');
+
+  // Scene-specific init
+  if (scene.id === 's3') initTyping();
+  if (scene.id === 's4') initQuestions();
+
+  // Animate progress fill
+  const fill = document.getElementById('pf' + index);
+  requestAnimationFrame(() => {
+    requestAnimationFrame(() => {
+      fill.style.transition = `width ${scene.duration}ms linear`;
+      fill.style.width = '100%';
+    });
+  });
+
+  // Advance after duration
+  clearTimeout(timer);
+  timer = setTimeout(() => runScene(index + 1), scene.duration);
+}
+
+// Typewriter for scene 3
+const typeText = "Write a cover letter for a marketing job at Spotify.";
+let typeIndex = 0;
+let typeTimer = null;
+function initTyping() {
+  const target = document.getElementById('typeTarget');
+  target.innerHTML = '';
+  typeIndex = 0;
+  clearInterval(typeTimer);
+  typeTimer = setInterval(() => {
+    if (typeIndex < typeText.length) {
+      target.innerHTML = typeText.slice(0, ++typeIndex) + '<span class="cursor"></span>';
+    } else {
+      clearInterval(typeTimer);
+    }
+  }, 55);
+}
+
+// Staggered question cards for scene 4
+function initQuestions() {
+  ['q1','q2','q3'].forEach(id => {
+    document.getElementById(id).classList.remove('show');
+  });
+  setTimeout(() => document.getElementById('q1').classList.add('show'), 300);
+  setTimeout(() => document.getElementById('q2').classList.add('show'), 800);
+  setTimeout(() => document.getElementById('q3').classList.add('show'), 1300);
+}
+
+// Tap to advance
+document.querySelector('.phone').addEventListener('click', () => {
+  clearTimeout(timer);
+  const fill = document.getElementById('pf' + currentScene);
+  fill.style.transition = 'none';
+  fill.style.width = '100%';
+  runScene(currentScene + 1);
+});
+
+// Start
+runScene(0);
+</script>
+</body>
+</html>
