@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Privacy Policy — OnePrompt</title>
+    <meta name="description" content="OnePrompt Privacy Policy — your data stays on your device.">
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=DM+Serif+Display&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #09090b;
+            --navy: #0A0E1A;
+            --navy-light: #1C2540;
+            --surface: rgba(28,37,64,0.5);
+            --surface-border: rgba(255,255,255,0.07);
+            --text: #fafafa;
+            --text-secondary: rgba(255,255,255,0.55);
+            --text-tertiary: rgba(255,255,255,0.3);
+            --indigo: #6366f1;
+            --indigo-light: #818cf8;
+            --gold: #F0C040;
+            --green: #4ade80;
+            --radius: 16px;
+        }
+        * { margin:0; padding:0; box-sizing:border-box; }
+        html { scroll-behavior: smooth; }
+        body {
+            font-family: 'DM Sans', -apple-system, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.7;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        nav {
+            padding: 20px 32px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid var(--surface-border);
+        }
+        .logo {
+            font-family: 'DM Serif Display', serif;
+            font-size: 1.25rem;
+            text-decoration: none;
+            color: var(--text);
+        }
+        .nav-back {
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+        .nav-back:hover { color: var(--text); }
+
+        main {
+            max-width: 720px;
+            margin: 0 auto;
+            padding: 80px 24px 120px;
+        }
+
+        .hero {
+            text-align: center;
+            margin-bottom: 64px;
+        }
+        .badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(74,222,128,0.1);
+            border: 1px solid rgba(74,222,128,0.2);
+            border-radius: 20px;
+            padding: 6px 16px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: var(--green);
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+            margin-bottom: 20px;
+        }
+        .hero h1 {
+            font-family: 'DM Serif Display', serif;
+            font-size: 2.5rem;
+            font-weight: 400;
+            margin-bottom: 16px;
+            letter-spacing: -0.03em;
+        }
+        .hero p {
+            color: var(--text-secondary);
+            font-size: 1.05rem;
+            max-width: 520px;
+            margin: 0 auto;
+        }
+
+        .tldr {
+            background: var(--surface);
+            border: 1px solid var(--surface-border);
+            border-radius: var(--radius);
+            padding: 32px;
+            margin-bottom: 48px;
+        }
+        .tldr h2 {
+            font-size: 1rem;
+            font-weight: 700;
+            color: var(--indigo-light);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 16px;
+        }
+        .tldr-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+        .tldr-list li {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            font-size: 0.95rem;
+        }
+        .tldr-list .icon {
+            color: var(--green);
+            flex-shrink: 0;
+            margin-top: 2px;
+            font-size: 1rem;
+        }
+
+        .section {
+            margin-bottom: 48px;
+        }
+        .section h2 {
+            font-family: 'DM Serif Display', serif;
+            font-size: 1.5rem;
+            font-weight: 400;
+            margin-bottom: 16px;
+            padding-bottom: 12px;
+            border-bottom: 1px solid var(--surface-border);
+        }
+        .section p {
+            color: var(--text-secondary);
+            margin-bottom: 12px;
+            font-size: 0.95rem;
+        }
+        .section p:last-child { margin-bottom: 0; }
+        .section ul {
+            list-style: none;
+            padding: 0;
+            margin-top: 8px;
+        }
+        .section ul li {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+            padding: 6px 0 6px 20px;
+            position: relative;
+        }
+        .section ul li::before {
+            content: '–';
+            position: absolute;
+            left: 0;
+            color: var(--indigo);
+        }
+
+        .highlight-box {
+            background: rgba(99,102,241,0.08);
+            border: 1px solid rgba(99,102,241,0.2);
+            border-radius: 12px;
+            padding: 20px 24px;
+            margin: 20px 0;
+        }
+        .highlight-box p {
+            color: var(--text) !important;
+            font-size: 0.95rem;
+        }
+
+        .contact-box {
+            background: var(--surface);
+            border: 1px solid var(--surface-border);
+            border-radius: var(--radius);
+            padding: 32px;
+            text-align: center;
+            margin-top: 64px;
+        }
+        .contact-box h2 {
+            font-family: 'DM Serif Display', serif;
+            font-size: 1.5rem;
+            font-weight: 400;
+            margin-bottom: 10px;
+        }
+        .contact-box p {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            margin-bottom: 16px;
+        }
+        .contact-box a {
+            color: var(--indigo-light);
+            text-decoration: none;
+        }
+        .contact-box a:hover { text-decoration: underline; }
+
+        .meta {
+            text-align: center;
+            color: var(--text-tertiary);
+            font-size: 0.8rem;
+            margin-top: 48px;
+        }
+
+        footer {
+            text-align: center;
+            padding: 24px;
+            color: var(--text-tertiary);
+            font-size: 0.75rem;
+            border-top: 1px solid var(--surface-border);
+        }
+
+        @media (max-width: 600px) {
+            .hero h1 { font-size: 2rem; }
+            main { padding: 48px 20px 80px; }
+        }
+    </style>
+</head>
+<body>
+
+<nav>
+    <a href="/" class="logo">OnePrompt</a>
+    <a href="/" class="nav-back">← Back to site</a>
+</nav>
+
+<main>
+
+    <div class="hero">
+        <div class="badge">✓ Privacy First</div>
+        <h1>Privacy Policy</h1>
+        <p>OnePrompt is built on a simple belief: your data belongs to you, not us.</p>
+    </div>
+
+    <div class="tldr">
+        <h2>The Short Version</h2>
+        <ul class="tldr-list">
+            <li><span class="icon">✓</span><span>Everything you type stays on your device. We never see it.</span></li>
+            <li><span class="icon">✓</span><span>No account required. No sign-up, no email, no password.</span></li>
+            <li><span class="icon">✓</span><span>No analytics tracking your behavior inside the app.</span></li>
+            <li><span class="icon">✓</span><span>No data sold or shared with third parties. Ever.</span></li>
+            <li><span class="icon">✓</span><span>No ads. No ad networks. No tracking pixels.</span></li>
+        </ul>
+    </div>
+
+    <div class="section">
+        <h2>What We Collect</h2>
+        <div class="highlight-box">
+            <p><strong>Nothing.</strong> OnePrompt operates entirely on your device. Your prompts, your answers, your history — none of it is transmitted to our servers because we don't have servers that receive it.</p>
+        </div>
+        <p>All data you enter — your intent descriptions, question answers, generated prompts, and saved history — is stored locally on your iPhone using standard iOS storage. It stays there until you delete the app.</p>
+    </div>
+
+    <div class="section">
+        <h2>App Store & Analytics</h2>
+        <p>OnePrompt is distributed through Apple's App Store. Apple may collect certain usage statistics as part of their platform (such as crash reports and download counts). This data is governed by <a href="https://www.apple.com/legal/privacy/" style="color:var(--indigo-light);">Apple's Privacy Policy</a> and is separate from anything we control.</p>
+        <p>We do not use any third-party analytics SDKs (no Firebase, no Mixpanel, no Amplitude, no Amplitude, no Facebook SDK).</p>
+    </div>
+
+    <div class="section">
+        <h2>Waitlist & Website</h2>
+        <p>If you sign up for early access on our website (oneprompt.info), we collect:</p>
+        <ul>
+            <li>Your email address</li>
+            <li>Your responses to the waitlist questions</li>
+        </ul>
+        <p>This information is stored in Google Forms / Google Sheets and is used solely to notify you when the app is available and to understand user needs. We will never use it for marketing unrelated to OnePrompt.</p>
+        <p>You can request deletion of your waitlist data at any time by emailing us.</p>
+    </div>
+
+    <div class="section">
+        <h2>Children's Privacy</h2>
+        <p>OnePrompt is not directed at children under 13. We do not knowingly collect any information from children. The app is rated 4+ on the App Store only because it contains no objectionable content — not because it is intended for young children.</p>
+    </div>
+
+    <div class="section">
+        <h2>Changes to This Policy</h2>
+        <p>If we make changes to this privacy policy, we'll update this page with a new date. We'll only make changes that maintain or strengthen your privacy protections — never ones that reduce them.</p>
+        <p>If we ever introduce any data collection in a future version of the app, it will be clearly disclosed, optional, and require your explicit consent.</p>
+    </div>
+
+    <div class="section">
+        <h2>Your Rights</h2>
+        <p>Since we don't collect personal data from the app, there's nothing for us to delete, export, or correct on our end. Your data lives on your device — you can delete it at any time by deleting the app.</p>
+        <p>For waitlist data, you have the right to access, correct, or delete your information. Just reach out.</p>
+    </div>
+
+    <div class="contact-box">
+        <h2>Questions?</h2>
+        <p>We're real people and we'll respond.</p>
+        <a href="mailto:hello@oneprompt.info">hello@oneprompt.info</a>
+    </div>
+
+    <div class="meta">
+        Last updated: March 2, 2026 · Effective immediately
+    </div>
+
+</main>
+
+<footer>
+    © 2026 OnePrompt · <a href="/" style="color:inherit;">Home</a>
+</footer>
+
+</body>
+</html>
